@@ -1,0 +1,71 @@
+[
+  {
+    "id": "carousel_health_fair",
+    "platform": "instagram",
+    "type": "carousel",
+    "send_at": "2026-10-01T18:00:00-07:00",
+    "caption": "⏳ 5 DAYS AWAY: volunteers needed for the Park Parthenia Community Health Fair! 🙌\n📅 Tue, Oct 6 · 1:00–4:30 PM\n📍 Park Parthenia Apartments, 19100 Parthenia St., Northridge\n\nHelp run the tables, lead the kids' waste-sorting game, hand out kitchen pails and talk with residents about recycling ♻️\n🗣️ ¿Hablas español? ¡Te necesitamos!\n\n👉 Sign up at the link in bio! Swipe to see last year's fair.\n\n#CSUN #ParkParthenia #CommunityHealthFair #VolunteersNeeded #Volunteer #Northridge #SanFernandoValley #RecyKOOL #ZeroWaste #CitizenScience",
+    "images": [
+      "queue/3030677f61870e5e.enc",
+      "queue/d0199f91b31fcb6a.enc",
+      "queue/f9c2f87855916f1e.enc",
+      "queue/622c6e7d398b9c99.enc",
+      "queue/e7ff3b2bbaf0cf13.enc"
+    ]
+  },
+  {
+    "id": "reel_woniya_v2",
+    "platform": "instagram",
+    "type": "reel",
+    "send_at": "2026-10-02T18:00:00-07:00",
+    "caption": "🌬️ CS majors: want your code to help people breathe easier?\n\nWoniya Wichoni (\"breath of life\") is an ARCS air quality citizen science project focused on environmental data and Indigenous community health, centering community, land, and climate justice. 🌎\n\nWe're looking for students with:\n💻 Programming (JavaScript or similar)\n🗄️ Database systems\n🌐 Front-end & back-end web development\n🔀 Git/GitHub\n🔌 Embedded systems\n\n👉 Apply at the link in bio!\n❓ Questions: citizen.science.csun@gmail.com\n\nIn partnership with ARCS, the CSUN Citizen Science Club & NASA JPL\n\n#CSUN #ComputerScience #CitizenScience #AirQuality #ClimateJustice #EnvironmentalJustice #IndigenousHealth #NASAJPL #STEM #CSMajors #WebDevelopment #EmbeddedSystems #Matadors",
+    "collaborators": [
+      "csun_arcs",
+      "acmcsun"
+    ],
+    "video": "queue/18aa36f73cb6067e.enc",
+    "thumb_offset_ms": 8000
+  },
+  {
+    "id": "reel_kitchen_pails_v2",
+    "platform": "instagram",
+    "type": "reel",
+    "send_at": "2026-10-08T18:00:00-07:00",
+    "caption": "🌱 Less food waste in the landfill starts in the kitchen. STUDENTS WANTED! 🪣\n\nCSUN Citizen Science Club is gauging student interest in helping distribute 500 food-waste kitchen pails to local residents through RecyKOOL outreach. The goal: keep food waste out of the landfill. Plus real community impact and great résumé experience.\n\n👉 Want to get involved? Sign up through the Google Form: link in our bio!\n⏳ Timing and details to follow.\n\n#CSUN #CSUNMatadors #CitizenScience #FoodWaste #Composting #ZeroWaste #Landfill #Volunteer #Sustainability #RecyKOOL",
+    "collaborators": [
+      "csun.enviro"
+    ],
+    "video": "queue/01d15d6794ddfdd3.enc",
+    "thumb_offset_ms": 3500
+  },
+  {
+    "id": "fair_tomorrow",
+    "platform": "discord",
+    "send_at": "2026-10-05T18:00:00-07:00",
+    "content": "@everyone 🍍 **The Park Parthenia Community Health Fair is TOMORROW!**\n📅 Tue, Oct 6 · 1:00–4:30 PM\n📍 Park Parthenia Apartments, 19100 Parthenia St., Northridge\n\nSigned-up volunteers: watch for arrival details from the PPA leads.\n🗣️ ¿Hablas español? ¡Te necesitamos!\nHaven't signed up yet? 👉 https://docs.google.com/forms/d/e/1FAIpQLSe2K2KcwHHahK4AnmUoDqWQhGmKnOil1Diek3wg1WLJBtT3iA/viewform"
+  },
+  {
+    "id": "reel_recykool",
+    "platform": "discord",
+    "send_at": "2026-09-30T18:05:00-07:00",
+    "content": "@everyone ♻️ **Join RecyKOOL: Park Parthenia Apartments or Sun Valley Recycling Park**\n🏘️ **Park Parthenia:** resident outreach, recycling workshops, bin audits & data dashboards\n🤖 **Sun Valley:** using AI to simulate and improve real-world waste management systems\n\n🌱 All majors, no experience needed · CSUN + community college students welcome\n👉 **Apply (pick one or both teams):** https://docs.google.com/forms/d/10XkQBVFfdB82W95pDe6batAkVPZN4B36sGLG_fOnx7Q/viewform\n❤️ Like & share today's reel: <https://www.instagram.com/citizen.science.csun/reels/>",
+    "file": "queue/0c530055e2b0d9df.enc",
+    "filename": "2_Wed-9-30_6PM_RecyKOOL_13s_CTA.mp4"
+  },
+  {
+    "id": "reel_woniya",
+    "platform": "discord",
+    "send_at": "2026-10-02T18:05:00-07:00",
+    "content": "@everyone 🌬️ **CS majors: want your code to help people breathe easier?**\nWoniya Wichoni (\"breath of life\") is an ARCS air quality project: environmental data for Indigenous community health, land and climate justice.\n\n💻 JavaScript · 🗄️ Databases · 🌐 Full-stack web · 🔀 Git/GitHub · 🔌 Embedded systems\n👉 **Apply:** https://docs.google.com/forms/d/e/1FAIpQLSd-SpIlUbohkeUxUMLtDnadX0obnUU2fJ8m4kinqk1bJasjMw/viewform\n❤️ Like & share today's reel: <https://www.instagram.com/citizen.science.csun/reels/>",
+    "file": "queue/18aa36f73cb6067e.enc",
+    "filename": "3_Fri-10-2_6PM_Woniya_21s_CTA.mp4"
+  },
+  {
+    "id": "reel_kitchen_pails",
+    "platform": "discord",
+    "send_at": "2026-10-08T18:05:00-07:00",
+    "content": "@everyone 🪣 **500 kitchen pails. Less food waste in the landfill.**\nWe're gauging interest in helping hand out 500 food-waste kitchen pails to local residents through RecyKOOL outreach. Real community impact, and great résumé experience.\n\n👉 **Interested? Sign up:** https://docs.google.com/forms/d/e/1FAIpQLSfLIyukkEj1lvEuyx09VB9nRICO6npOKF4noOmN0a6fsaVxrQ/viewform\n⏳ Timing and details to follow.\n❤️ Like & share today's reel: <https://www.instagram.com/citizen.science.csun/reels/>",
+    "file": "queue/01d15d6794ddfdd3.enc",
+    "filename": "4_Thu-10-8_6PM_Kitchen_Pails_20s_CTA.mp4"
+  }
+]

@@ -1,0 +1,43 @@
+name: autopost
+# Posts scheduled Instagram/Discord content for the CSUN Citizen Science Club (see autopost/schedule.json).
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      args:
+        description: "Extra args, e.g. --dry-run --only=carousel_health_fair"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet cryptography
+      - name: Post anything that is due
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MEDIA_KEY: ${{ secrets.MEDIA_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python autopost/run.py ${{ github.event.inputs.args }}
+      - name: Save what was posted
+        if: always()
+        run: |
+          git config user.name csc-autopost
+          git config user.email csc-autopost@users.noreply.github.com
+          git add autopost/state.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "autopost: update state" && git push)

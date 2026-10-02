@@ -138,10 +138,35 @@ def post_discord(p):
     with urllib.request.urlopen(req, timeout=180) as r:
         return f"HTTP {r.status}"
 
+WAIT_LIMIT = datetime.timedelta(hours=5, minutes=30)  # GitHub jobs may run up to 6 h
+
+def next_due(sched, state, now):
+    pending = [datetime.datetime.fromisoformat(p["send_at"]) for p in sched if p["id"] not in state
+               and datetime.datetime.fromisoformat(p["send_at"]) - now > datetime.timedelta(minutes=-1)]
+    return min(pending) if pending else None
+
+def relay():
+    """Start the next run (allowed from GITHUB_TOKEN for workflow_dispatch) so a run is always waiting.
+    GitHub's own cron is too sparse on quiet repos (runs were ~6 h apart), so the schedule can't rely on it."""
+    req = urllib.request.Request(f"https://api.github.com/repos/{REPO_SLUG}/actions/workflows/autopost.yml/dispatches",
+                                 data=json.dumps({"ref": "main"}).encode(), method="POST",
+                                 headers={"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}", "Accept": "application/vnd.github+json"})
+    try:
+        urllib.request.urlopen(req, timeout=30); log("relay: next run started")
+    except Exception as e:
+        log(f"relay failed ({e}); falling back to the cron schedule")
+
 def main():
     only = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--only=")), None)
     sched, state = load("schedule.json", []), load("state.json", {})
     now = datetime.datetime.now(datetime.timezone.utc)
+    if not DRY and not only:
+        nd = next_due(sched, state, now)
+        if nd and now < nd:  # wait here so the post goes out on time (or hand off after WAIT_LIMIT)
+            until = min(nd, now + WAIT_LIMIT)
+            log(f"next post at {nd.isoformat()}; waiting until {until.isoformat()}")
+            time.sleep(max(0, (until - now).total_seconds()) + 5)
+            now = datetime.datetime.now(datetime.timezone.utc)
     failed = False
     for p in sched:
         if only and p["id"] != only:
@@ -163,6 +188,8 @@ def main():
             log(f"{p['id']}: FAILED {e}")
     if not DRY:
         save_state(state)
+        if not only and next_due(sched, state, datetime.datetime.now(datetime.timezone.utc)):
+            relay()  # keep a run waiting for the next post
     sys.exit(1 if failed else 0)
 
 if __name__ == "__main__":

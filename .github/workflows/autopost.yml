@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # lets a run start the next one (relay), since GitHub's cron is sparse on quiet repos
 
 concurrency:
   group: autopost
@@ -20,7 +21,7 @@ concurrency:
 jobs:
   post:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 350   # a run may wait up to 5.5 h for the next post
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -223,7 +223,10 @@ def main():
                 log(f"{p['id']}: same caption already on Instagram, not posting again")
                 record(p["id"], {"at": now.isoformat(), "result": "already posted (duplicate guard)"})
                 continue
-            result = post_instagram(p) if p["platform"] == "instagram" else post_discord(p)
+            if p["platform"] == "noop":  # self-test entry: exercises state saving without posting anything
+                result = "noop ok"
+            else:
+                result = post_instagram(p) if p["platform"] == "instagram" else post_discord(p)
             log(f"{p['id']}: {result}")
             if not DRY:
                 record(p["id"], {"at": now.isoformat(), "result": result})  # saved before anything else happens

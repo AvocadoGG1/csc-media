@@ -156,12 +156,51 @@ def relay():
     except Exception as e:
         log(f"relay failed ({e}); falling back to the cron schedule")
 
+# ---------- state: always read fresh from origin/main, saved right after each post ----------
+# (On 10/2 a relayed run checked out a commit from before the previous run saved state, and the end-of-run state
+#  commit was then rejected, so Woniya posted twice on Instagram and its Discord post repeated. Never again.)
+def repo(*args):
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
+
+def fresh_state():
+    repo("fetch", "-q", "origin", "main")
+    r = repo("show", "origin/main:autopost/state.json")
+    return json.loads(r.stdout) if r.returncode == 0 and r.stdout.strip() else {}
+
+def record(pid, info):
+    """Write one entry to state.json on origin/main, retrying on push races. Raises if it can't be saved."""
+    repo("config", "user.name", "csc-autopost"); repo("config", "user.email", "csc-autopost@users.noreply.github.com")
+    for attempt in range(6):
+        state = fresh_state()
+        state[pid] = info
+        repo("reset", "-q", "--hard", "origin/main")
+        save_state(state)
+        repo("add", "autopost/state.json")
+        repo("commit", "-q", "-m", f"autopost: {pid}")
+        if repo("push", "-q", "origin", "HEAD:main").returncode == 0:
+            return
+        time.sleep(3 + attempt * 2)
+    raise RuntimeError(f"could not save state for {pid}")
+
+def already_on_instagram(caption):
+    """Last-resort duplicate guard: was this exact caption posted in the last 36 h?"""
+    try:
+        recent = ig("GET", "me/media", {"fields": "caption,timestamp", "limit": "10"}).get("data", [])
+    except Exception:
+        return False
+    cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=36)
+    for m in recent:
+        t = datetime.datetime.fromisoformat(m["timestamp"].replace("+0000", "+00:00"))
+        if t > cutoff and (m.get("caption") or "").strip() == caption.strip():
+            return True
+    return False
+
 def main():
     only = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--only=")), None)
-    sched, state = load("schedule.json", []), load("state.json", {})
+    sched = load("schedule.json", [])
     now = datetime.datetime.now(datetime.timezone.utc)
     if not DRY and not only:
-        nd = next_due(sched, state, now)
+        nd = next_due(sched, fresh_state(), now)
         if nd and now < nd:  # wait here so the post goes out on time (or hand off after WAIT_LIMIT)
             until = min(nd, now + WAIT_LIMIT)
             log(f"next post at {nd.isoformat()}; waiting until {until.isoformat()}")
@@ -172,24 +211,27 @@ def main():
         if only and p["id"] != only:
             continue
         due = datetime.datetime.fromisoformat(p["send_at"])
+        state = fresh_state()  # re-check right before every post
         if p["id"] in state and not DRY:
             continue
         if not only and (now < due or now - due > datetime.timedelta(hours=12)):
-            if now - due > datetime.timedelta(hours=12) and p["id"] not in state:
-                log(f"{p['id']}: too late ({now - due}), skipping"); state[p["id"]] = {"skipped": now.isoformat()}
+            if now - due > datetime.timedelta(hours=12) and not DRY:
+                log(f"{p['id']}: too late ({now - due}), skipping"); record(p["id"], {"skipped": now.isoformat()})
             continue
         try:
+            if p["platform"] == "instagram" and not DRY and already_on_instagram(p["caption"]):
+                log(f"{p['id']}: same caption already on Instagram, not posting again")
+                record(p["id"], {"at": now.isoformat(), "result": "already posted (duplicate guard)"})
+                continue
             result = post_instagram(p) if p["platform"] == "instagram" else post_discord(p)
             log(f"{p['id']}: {result}")
             if not DRY:
-                state[p["id"]] = {"at": now.isoformat(), "result": result}
+                record(p["id"], {"at": now.isoformat(), "result": result})  # saved before anything else happens
         except Exception as e:
             failed = True
             log(f"{p['id']}: FAILED {e}")
-    if not DRY:
-        save_state(state)
-        if not only and next_due(sched, state, datetime.datetime.now(datetime.timezone.utc)):
-            relay()  # keep a run waiting for the next post
+    if not DRY and not only and not failed and next_due(sched, fresh_state(), datetime.datetime.now(datetime.timezone.utc)):
+        relay()  # only after state is safely saved
     sys.exit(1 if failed else 0)
 
 if __name__ == "__main__":

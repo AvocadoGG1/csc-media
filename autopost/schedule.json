@@ -27,18 +27,6 @@
     "thumb_offset_ms": 8000
   },
   {
-    "id": "reel_kitchen_pails_v2",
-    "platform": "instagram",
-    "type": "reel",
-    "send_at": "2026-10-08T18:00:00-07:00",
-    "caption": "🌱 Less food waste in the landfill starts in the kitchen. STUDENTS WANTED! 🪣\n\nCSUN Citizen Science Club is gauging student interest in helping distribute 500 food-waste kitchen pails to local residents through RecyKOOL outreach. The goal: keep food waste out of the landfill. Plus real community impact and great résumé experience.\n\n👉 Want to get involved? Sign up through the Google Form: link in our bio!\n⏳ Timing and details to follow.\n\n#CSUN #CSUNMatadors #CitizenScience #FoodWaste #Composting #ZeroWaste #Landfill #Volunteer #Sustainability #RecyKOOL",
-    "collaborators": [
-      "csun.enviro"
-    ],
-    "video": "queue/01d15d6794ddfdd3.enc",
-    "thumb_offset_ms": 3500
-  },
-  {
     "id": "fair_tomorrow",
     "platform": "discord",
     "send_at": "2026-10-05T18:00:00-07:00",
@@ -59,18 +47,5 @@
     "content": "@everyone 🌬️ **CS majors: want your code to help people breathe easier?**\nWoniya Wichoni (\"breath of life\") is an ARCS air quality project: environmental data for Indigenous community health, land and climate justice.\n\n💻 JavaScript · 🗄️ Databases · 🌐 Full-stack web · 🔀 Git/GitHub · 🔌 Embedded systems\n👉 **Apply:** https://docs.google.com/forms/d/e/1FAIpQLSd-SpIlUbohkeUxUMLtDnadX0obnUU2fJ8m4kinqk1bJasjMw/viewform\n❤️ Like & share today's reel: <https://www.instagram.com/citizen.science.csun/reels/>",
     "file": "queue/18aa36f73cb6067e.enc",
     "filename": "3_Fri-10-2_6PM_Woniya_21s_CTA.mp4"
-  },
-  {
-    "id": "reel_kitchen_pails",
-    "platform": "discord",
-    "send_at": "2026-10-08T18:05:00-07:00",
-    "content": "@everyone 🪣 **500 kitchen pails. Less food waste in the landfill.**\nWe're gauging interest in helping hand out 500 food-waste kitchen pails to local residents through RecyKOOL outreach. Real community impact, and great résumé experience.\n\n👉 **Interested? Sign up:** https://docs.google.com/forms/d/e/1FAIpQLSfLIyukkEj1lvEuyx09VB9nRICO6npOKF4noOmN0a6fsaVxrQ/viewform\n⏳ Timing and details to follow.\n❤️ Like & share today's reel: <https://www.instagram.com/citizen.science.csun/reels/>",
-    "file": "queue/01d15d6794ddfdd3.enc",
-    "filename": "4_Thu-10-8_6PM_Kitchen_Pails_20s_CTA.mp4"
-  },
-  {
-    "id": "_selftest",
-    "platform": "noop",
-    "send_at": "2026-10-03T00:00:00-07:00"
   }
 ]
